@@ -17,10 +17,10 @@ var (
 )
 var playableShapes = [...]Shape{iShape, oShape, tShape, jShape, lShape, sShape, zShape}
 
-func fill(shape Shape, val int) Shape {
+func fill(shape Shape, scale int) Shape {
 	for i, row := range shape {
 		for j := range row {
-			shape[i][j] *= val
+			shape[i][j] *= scale
 		}
 	}
 	return shape

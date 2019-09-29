@@ -9,10 +9,10 @@ import (
 func main() {
 	env := env.NewEnvironment(0)
 	env.Render()
-	for i := 0; i < 100; i++ {
-		if i%5 == 0 {
-			env.MoveRight()
-		}
+	for i := 0; i < 20; i++ {
+		// if i%5 == 0 {
+		// env.MoveRight()
+		// }
 		err := env.Update()
 		env.Render()
 		if err != nil {
