@@ -5,21 +5,24 @@ import (
 	"math/rand"
 )
 
-type environment struct {
+// Environment current Game representation
+type Environment struct {
 	board                   Board
 	currentShape, nextShape Shape
 	shapeX, shapeY          int
-	score                   int
+	Score                   int
 }
 
-func NewEnvironment(seed int64) environment {
+// NewEnvironment initialize new game Environment
+func NewEnvironment(seed int64) Environment {
 	rand.Seed(seed)
-	env := environment{}
+	env := Environment{}
 	env.currentShape, env.nextShape = getRandomShape(), getRandomShape()
 	return env
 }
 
-func (env *environment) Render() {
+// Render game in terminal (stdout)
+func (env *Environment) Render() {
 	fmt.Println("#==========#")
 	board, err := env.board.fit(env.currentShape, env.shapeX, env.shapeY)
 	if err != nil {
@@ -47,7 +50,8 @@ func (env *environment) Render() {
 	fmt.Println()
 }
 
-func (env *environment) Update() error {
+// Update environment state
+func (env *Environment) Update() error {
 	if err := env.board.canFit(env.currentShape, env.shapeX, env.shapeY); err != nil {
 		return errGameOver()
 	}
@@ -62,7 +66,8 @@ func (env *environment) Update() error {
 	return nil
 }
 
-func (env *environment) MoveRight() error {
+// MoveRight apply action on environment
+func (env *Environment) MoveRight() error {
 	if err := env.board.canFit(env.currentShape, env.shapeX+1, env.shapeY); err != nil {
 		return errMove("right")
 	}
