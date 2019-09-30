@@ -43,5 +43,5 @@ func (env *Environment) equal(other *Environment) bool {
 		env.nextShape.equal(other.nextShape) &&
 		env.shapeX == other.shapeX &&
 		env.shapeY == other.shapeY &&
-		env.Score == other.Score
+		env.score == other.score
 }

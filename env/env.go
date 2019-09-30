@@ -10,7 +10,8 @@ type Environment struct {
 	board                   Board
 	currentShape, nextShape Shape
 	shapeX, shapeY          int
-	Score                   int
+	score                   int
+	timestamp               int
 }
 
 // NewEnvironment initialize new game Environment
@@ -23,6 +24,7 @@ func NewEnvironment(seed int64) Environment {
 
 // Render game in terminal (stdout)
 func (env *Environment) Render() {
+	fmt.Printf("#%v\n", env.timestamp)
 	fmt.Println("#==========#")
 	board, err := env.board.fit(env.currentShape, env.shapeX, env.shapeY)
 	if err != nil {
@@ -47,11 +49,12 @@ func (env *Environment) Render() {
 		}
 		fmt.Println("|")
 	}
-	fmt.Println()
+	fmt.Print("\n\n")
 }
 
 // Update environment state
 func (env *Environment) Update() error {
+	env.timestamp++
 	if err := env.board.canFit(env.currentShape, env.shapeX, env.shapeY); err != nil {
 		return errGameOver()
 	}
@@ -62,16 +65,26 @@ func (env *Environment) Update() error {
 	newBoard, _ := env.board.fit(env.currentShape, env.shapeX, env.shapeY)
 	env.board = *newBoard
 
+	env.score += 100
+
 	env.currentShape, env.nextShape = env.nextShape, getRandomShape()
 	env.shapeX, env.shapeY = 0, 0
 	return nil
 }
 
-// MoveRight apply action on environment
-func (env *Environment) MoveRight() error {
-	if err := env.board.canFit(env.currentShape, env.shapeX+1, env.shapeY); err != nil {
-		return errMove("right")
+// MakeAction on environment
+func (env *Environment) MakeAction(a Action) error {
+	switch a {
+	case MoveLeft:
+		if err := env.board.canFit(env.currentShape, env.shapeX-1, env.shapeY); err != nil {
+			return errMove("left")
+		}
+		env.shapeX--
+	case MoveRight:
+		if err := env.board.canFit(env.currentShape, env.shapeX+1, env.shapeY); err != nil {
+			return errMove("right")
+		}
+		env.shapeX++
 	}
-	env.shapeX++
 	return nil
 }

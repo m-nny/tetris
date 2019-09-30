@@ -3,22 +3,13 @@ package main
 import (
 	"fmt"
 
+	"github.com/m-nny/tetris/agents"
 	"github.com/m-nny/tetris/env"
 )
 
 func main() {
-	env := env.NewEnvironment(0)
-	env.Render()
-	for i := 0; i < 20; i++ {
-		// if i%5 == 0 {
-		// env.MoveRight()
-		// }
-		err := env.Update()
-		env.Render()
-		if err != nil {
-			fmt.Println(err)
-			break
-		}
-	}
-	env.Render()
+	var agent env.Agent
+	agent = agents.MakeLazyAgent(42)
+	score, timestamp := env.Evaluate(&agent, 42)
+	fmt.Printf("%v %v", score, timestamp)
 }
