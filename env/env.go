@@ -52,8 +52,8 @@ func (env *Environment) Render() {
 	fmt.Print("\n\n")
 }
 
-// Update environment state
-func (env *Environment) Update() error {
+// update environment state
+func (env *Environment) update() error {
 	env.timestamp++
 	if err := env.board.canFit(env.currentShape, env.shapeX, env.shapeY); err != nil {
 		return errGameOver()

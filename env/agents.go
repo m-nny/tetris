@@ -15,7 +15,7 @@ func Evaluate(agent *Agent, seed int64) (score, timestamp int) {
 		if err := env.MakeAction(action); err != nil {
 			fmt.Println(err)
 		}
-		if err := env.Update(); err != nil {
+		if err := env.update(); err != nil {
 			break
 		}
 		env.Render()

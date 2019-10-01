@@ -15,7 +15,7 @@ func TestNewEnvironment(t *testing.T) {
 func TestEnvUpdate(t *testing.T) {
 	env := NewEnvironment(42)
 	ok := error(nil)
-	if got := env.Update(); got != ok {
+	if got := env.update(); got != ok {
 		t.Errorf("env.Update() threw error %v", got)
 	}
 	if env.shapeY != 1 {
@@ -24,7 +24,7 @@ func TestEnvUpdate(t *testing.T) {
 
 	// On last line
 	env.currentShape, env.shapeY = iShape, boardHeight-1
-	if got := env.Update(); got != ok {
+	if got := env.update(); got != ok {
 		t.Errorf("env.Update() threw error %v", got)
 	}
 	if env.shapeY != 0 {
@@ -32,7 +32,7 @@ func TestEnvUpdate(t *testing.T) {
 	}
 
 	env.board[0][0] = 1
-	if got := env.Update(); got == ok {
+	if got := env.update(); got == ok {
 		t.Errorf("env.Update() did not threw Game Over error")
 	}
 }
