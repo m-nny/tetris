@@ -2,6 +2,8 @@ package env
 
 import "fmt"
 
+var ok = error(nil)
+
 func errBounds() error {
 	return fmt.Errorf("env: Out of bounds")
 }

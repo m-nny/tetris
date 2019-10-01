@@ -14,7 +14,6 @@ func TestNewEnvironment(t *testing.T) {
 
 func TestEnvUpdate(t *testing.T) {
 	env := NewEnvironment(42)
-	ok := error(nil)
 	if got := env.update(); got != ok {
 		t.Errorf("env.Update() threw error %v", got)
 	}
@@ -43,6 +42,30 @@ func TestRender(t *testing.T) {
 	env.Render()
 	env.shapeX = -1
 	env.Render()
+}
+
+func TestMakeAction(t *testing.T) {
+	env := NewEnvironment(42)
+	action := Action(MoveRight)
+	env.shapeX = 0
+	if got := env.MakeAction(action); got != ok {
+		t.Errorf("env.MakeAction(%v) threw error", action)
+	}
+	env.shapeX = boardWidth - (env.currentShape.getWidth() - 1)
+	if got := env.MakeAction(action); got == ok {
+		t.Errorf("env.MakeAction(%v) dit not threw error", action)
+	}
+
+	action = Action(MoveLeft)
+	env.shapeX = boardWidth - (env.currentShape.getWidth() - 1)
+	if got := env.MakeAction(action); got != ok {
+		t.Errorf("env.MakeAction(%v) threw error", action)
+	}
+	action = Action(MoveLeft)
+	env.shapeX = 0
+	if got := env.MakeAction(action); got == ok {
+		t.Errorf("env.MakeAction(%v) dit not threw error", action)
+	}
 }
 
 func (env *Environment) equal(other *Environment) bool {
