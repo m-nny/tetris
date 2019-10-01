@@ -5,6 +5,14 @@ import (
 	"math/rand"
 )
 
+var scorePerLine = map[int]int{
+	0: 0,
+	1: 40,
+	2: 100,
+	3: 300,
+	4: 1200,
+}
+
 // Environment current Game representation
 type Environment struct {
 	board                   Board
@@ -63,9 +71,10 @@ func (env *Environment) update() error {
 		return nil
 	}
 	newBoard, _ := env.board.fit(env.currentShape, env.shapeX, env.shapeY)
+	newBoard, squashedLines := newBoard.squash()
 	env.board = *newBoard
 
-	env.score += 100
+	env.score += scorePerLine[squashedLines]
 
 	env.currentShape, env.nextShape = env.nextShape, getRandomShape()
 	env.shapeX, env.shapeY = 0, 0

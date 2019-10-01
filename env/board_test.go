@@ -37,6 +37,29 @@ func TestFit(t *testing.T) {
 	}
 }
 
+func TestSquash(t *testing.T) {
+	emptyBoard := Board{}
+	if got, _ := emptyBoard.squash(); !got.equal(&emptyBoard) {
+		t.Errorf("emptyBoard.squash() returned modified board")
+	}
+	original := Board{
+		{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {},
+		{0, 2, 3, 4, 5, 6, 7, 8, 9, 0},
+		{1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
+		{0, 2, 3, 4, 5, 6, 7, 8, 9, 0},
+		{1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
+	}
+	wantBoard, wantScore := Board{
+		{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {},
+		{0, 2, 3, 4, 5, 6, 7, 8, 9, 0},
+		{0, 2, 3, 4, 5, 6, 7, 8, 9, 0},
+	}, 2
+	if got, score := original.squash(); !got.equal(&wantBoard) || score != wantScore {
+		t.Errorf("testBoard.squash() = %v, %v, but wanted %v, %v", got, score, wantBoard, wantScore)
+	}
+
+}
+
 func (board *Board) equal(other *Board) bool {
 	for i, row := range board {
 		for j := range row {

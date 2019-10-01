@@ -37,6 +37,14 @@ func TestEnvUpdate(t *testing.T) {
 	}
 }
 
+func TestRender(t *testing.T) {
+	// TODO: THIS SHOULD BE REPLACED WITH PROPER TEST
+	env := NewEnvironment(42)
+	env.Render()
+	env.shapeX = -1
+	env.Render()
+}
+
 func (env *Environment) equal(other *Environment) bool {
 	return env.board.equal(&other.board) &&
 		env.currentShape.equal(other.currentShape) &&

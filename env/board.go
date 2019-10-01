@@ -39,3 +39,30 @@ func (board *Board) fit(shape Shape, x1, y1 int) (*Board, error) {
 	}
 	return &newBoard, nil
 }
+
+func (board *Board) squash() (newBoard *Board, squash int) {
+	var allFilled [boardHeight]bool
+	for y := 0; y < boardHeight; y++ {
+		allFilled[y] = true
+		for x := 0; x < boardWidth; x++ {
+			if board[y][x] == 0 {
+				allFilled[y] = false
+			}
+		}
+		if allFilled[y] {
+			squash++
+		}
+	}
+	newBoard = &Board{}
+	yTarget := boardHeight - 1
+	for ySource := boardHeight - 1; ySource >= 0; ySource-- {
+		if allFilled[ySource] {
+			continue
+		}
+		for x := 0; x < boardWidth; x++ {
+			newBoard[yTarget][x] = board[ySource][x]
+		}
+		yTarget--
+	}
+	return newBoard, squash
+}
