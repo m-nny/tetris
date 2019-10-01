@@ -34,7 +34,7 @@ func (shape Shape) getWidth() int {
 	return len(shape[0])
 }
 
-func getRandomShape() Shape {
+func getRandomShape(rand *rand.Rand) Shape {
 	idx := rand.Intn(len(playableShapes))
 	return playableShapes[idx]
 }

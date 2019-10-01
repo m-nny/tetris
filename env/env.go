@@ -20,13 +20,13 @@ type Environment struct {
 	shapeX, shapeY          int
 	score                   int
 	timestamp               int
+	rand                    *rand.Rand
 }
 
 // NewEnvironment initialize new game Environment
 func NewEnvironment(seed int64) Environment {
-	rand.Seed(seed)
-	env := Environment{}
-	env.currentShape, env.nextShape = getRandomShape(), getRandomShape()
+	env := Environment{rand: getRand(seed)}
+	env.currentShape, env.nextShape = getRandomShape(env.rand), getRandomShape(env.rand)
 	return env
 }
 
@@ -76,7 +76,7 @@ func (env *Environment) update() error {
 
 	env.score += scorePerLine[squashedLines]
 
-	env.currentShape, env.nextShape = env.nextShape, getRandomShape()
+	env.currentShape, env.nextShape = env.nextShape, getRandomShape(env.rand)
 	env.shapeX, env.shapeY = 0, 0
 	return nil
 }
@@ -96,4 +96,8 @@ func (env *Environment) MakeAction(a Action) error {
 		env.shapeX++
 	}
 	return nil
+}
+
+func getRand(seed int64) *rand.Rand {
+	return rand.New(rand.NewSource(seed))
 }

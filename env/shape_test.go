@@ -1,6 +1,8 @@
 package env
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestFill(t *testing.T) {
 	shape, scale := Shape{{1, 0}, {0, 1}}, 10
@@ -23,7 +25,7 @@ func TestGetDimentions(t *testing.T) {
 }
 
 func TestGetShape(t *testing.T) {
-	rShape := getRandomShape()
+	rShape := getRandomShape(getRand(42))
 	got, want := false, true
 	for _, pShape := range playableShapes {
 		if rShape.equal(pShape) {
