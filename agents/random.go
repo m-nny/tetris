@@ -10,7 +10,7 @@ type RandomAgent struct {
 	rand *rand.Rand
 }
 
-func MakeLazyAgent(seed int64) *RandomAgent {
+func MakeRandomAgent(seed int64) *RandomAgent {
 	r := rand.NewSource(seed)
 	return &RandomAgent{rand.New(r)}
 }

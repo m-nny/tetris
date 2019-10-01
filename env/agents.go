@@ -10,6 +10,9 @@ type Agent interface {
 // Evaluate agent
 func Evaluate(agent *Agent, seed int64, render bool) (score, timestamp int) {
 	env := NewEnvironment(seed)
+	if render {
+		env.Render()
+	}
 	for {
 		action := (*agent).Think(env)
 		if err := env.MakeAction(action); err != nil {

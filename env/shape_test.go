@@ -25,7 +25,7 @@ func TestGetDimentions(t *testing.T) {
 }
 
 func TestGetShape(t *testing.T) {
-	rShape := getRandomShape(getRand(42))
+	rShape := getRandomShape(GetRand(42))
 	got, want := false, true
 	for _, pShape := range playableShapes {
 		if rShape.equal(pShape) {
