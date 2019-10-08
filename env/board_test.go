@@ -13,7 +13,7 @@ func TestCanFit(t *testing.T) {
 		t.Errorf("emptyBoard.canFit(%v, %v, %v) did not threw error", shape, x, y)
 	}
 
-	x, y = boardWidth, boardHeight
+	x, y = BoardWidth, BoardHeight
 	if got := board.canFit(shape, x, y); got == ok {
 		t.Errorf("emptyBoard.canFit(%v, %v, %v) did not threw error", shape, x, y)
 	}

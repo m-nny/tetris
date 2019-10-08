@@ -22,7 +22,7 @@ func TestEnvUpdate(t *testing.T) {
 	}
 
 	// On last line
-	env.currentShape, env.ShapeY = iShape, boardHeight-1
+	env.currentShape, env.ShapeY = iShape, BoardHeight-1
 	if got := env.update(); got != ok {
 		t.Errorf("env.Update() threw error %v", got)
 	}
@@ -51,13 +51,13 @@ func TestMakeAction(t *testing.T) {
 	if got := env.MakeAction(action); got != ok {
 		t.Errorf("env.MakeAction(%v) threw error", action)
 	}
-	env.ShapeX = boardWidth - (env.currentShape.getWidth() - 1)
+	env.ShapeX = BoardWidth - (env.currentShape.getWidth() - 1)
 	if got := env.MakeAction(action); got == ok {
 		t.Errorf("env.MakeAction(%v) dit not threw error", action)
 	}
 
 	action = Action(MoveLeft)
-	env.ShapeX = boardWidth - (env.currentShape.getWidth() - 1)
+	env.ShapeX = BoardWidth - (env.currentShape.getWidth() - 1)
 	if got := env.MakeAction(action); got != ok {
 		t.Errorf("env.MakeAction(%v) threw error", action)
 	}

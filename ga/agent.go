@@ -1,23 +1,31 @@
 package ga
 
 import (
-	"fmt"
 	"math/rand"
 
 	"github.com/m-nny/tetris/env"
+	"gonum.org/v1/gonum/mat"
 )
 
 type GAgent struct {
-	core float32
+	core mat.Matrix
 }
 
 func newGAgent(seed int64) *GAgent {
 	rand := env.GetRand(seed)
-	return &GAgent{core: rand.Float32()}
+	m := make([]float64, env.BoardHeight*env.BoardWidth*3)
+	for i := range m {
+		m[i] = rand.Float64()
+	}
+
+	return &GAgent{
+		core: mat.NewDense(env.BoardHeight, env.BoardWidth, m),
+	}
 }
 
 func (gAgent *GAgent) Think(e env.Environment) env.Action {
-	action := int(float32((e.ShapeX+1)*(e.ShapeY+1)) * gAgent.core * 3)
+	env.Board
+	action := 
 	switch action % 3 {
 	case 0:
 		return env.Action(env.MoveLeft)
@@ -44,7 +52,7 @@ func (gAgent *GAgent) mutate(rand *rand.Rand) (baby GAgent) {
 	if r := rand.Float32(); r <= mutationRate {
 		dx := float32(rand.NormFloat64()) / 2
 		baby.core += dx
-		fmt.Printf("baby mutated: %v + %v = %v\n", gAgent.core, dx, baby.core)
+		// fmt.Printf("baby mutated: %v + %v = %v\n", gAgent.core, dx, baby.core)
 	}
 	return baby
 }

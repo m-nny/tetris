@@ -1,17 +1,17 @@
 package env
 
 const (
-	boardWidth  = 10
-	boardHeight = 15
+	BoardWidth  = 10
+	BoardHeight = 15
 )
 
 // Board current game
-type Board [boardHeight][boardWidth]int
+type Board [BoardHeight][BoardWidth]int
 
 func (board *Board) canFit(shape Shape, x1, y1 int) error {
 	x2, y2 := x1+shape.getWidth()-1, y1+shape.getHeight()-1
-	if !(0 <= x1 && x1 < boardWidth && 0 <= y1 && y1 < boardHeight) ||
-		!(0 <= x2 && x2 < boardWidth && 0 <= y2 && y2 < boardHeight) {
+	if !(0 <= x1 && x1 < BoardWidth && 0 <= y1 && y1 < BoardHeight) ||
+		!(0 <= x2 && x2 < BoardWidth && 0 <= y2 && y2 < BoardHeight) {
 		return errBounds()
 	}
 	for x, dx := x1, 0; x <= x2; x, dx = x+1, dx+1 {
@@ -41,10 +41,10 @@ func (board *Board) fit(shape Shape, x1, y1 int) (*Board, error) {
 }
 
 func (board *Board) squash() (newBoard *Board, squash int) {
-	var allFilled [boardHeight]bool
-	for y := 0; y < boardHeight; y++ {
+	var allFilled [BoardHeight]bool
+	for y := 0; y < BoardHeight; y++ {
 		allFilled[y] = true
-		for x := 0; x < boardWidth; x++ {
+		for x := 0; x < BoardWidth; x++ {
 			if board[y][x] == 0 {
 				allFilled[y] = false
 			}
@@ -54,12 +54,12 @@ func (board *Board) squash() (newBoard *Board, squash int) {
 		}
 	}
 	newBoard = &Board{}
-	yTarget := boardHeight - 1
-	for ySource := boardHeight - 1; ySource >= 0; ySource-- {
+	yTarget := BoardHeight - 1
+	for ySource := BoardHeight - 1; ySource >= 0; ySource-- {
 		if allFilled[ySource] {
 			continue
 		}
-		for x := 0; x < boardWidth; x++ {
+		for x := 0; x < BoardWidth; x++ {
 			newBoard[yTarget][x] = board[ySource][x]
 		}
 		yTarget--

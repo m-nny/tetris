@@ -7,6 +7,7 @@ import (
 	"github.com/m-nny/tetris/agents"
 	"github.com/m-nny/tetris/env"
 	"github.com/m-nny/tetris/ga"
+	"github.com/m-nny/tetris/nn"
 )
 
 func meanScore(agent *env.Agent, n int) (mScore, mLT float32) {
@@ -36,23 +37,23 @@ func testRandomAgent() {
 	meanScore(&agent, N)
 }
 
-// func testGAgent() {
-// 	var agent env.Agent
-// 	seed := int64(42)
-// 	agent = ga.NewGAgent(seed)
-// 	// score, lf := env.Evaluate(&agent, seed, true)
-// 	// fmt.Printf("seed: %v score: %v lifetime: %v\n", seed, score, lf)
-// 	N := 100
-// 	meanScore(&agent, N)
-// }
-
 func testGA() {
 	p := ga.InitPopulation(42, 1000)
 	// fmt.Printf("%v\n", p)
-	newP := p.Next(40, true)
-	fmt.Printf("%v\n", newP)
+	for i := 0; i < 10; i++ {
+		p = p.Next(40, true)
+	}
+}
+
+func testMatrix(seed int64) {
+	rand := rand.New(rand.NewSource(seed))
+	m := nn.Matrix{{.4, .3, .7}}
+	fmt.Println(m)
+	m = m.Mutate(rand, .5)
+	fmt.Println(m)
 }
 
 func main() {
-	testGA()
+	// testGA()
+	testMatrix(42)
 }
